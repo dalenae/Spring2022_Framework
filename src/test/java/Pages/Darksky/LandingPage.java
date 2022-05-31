@@ -1,4 +1,5 @@
 package Pages.Darksky;
+import Helper.Misc;
 import Pages.Commands;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -31,6 +32,7 @@ public class LandingPage extends Commands {
         // second method to click
         public void clickTimeMachineBtn() {
             scrollAndClickElement2(timeMachineLocator);
+            Misc.pause(2);
         }
 
         // method to check if Time Machine button is enabled
@@ -45,12 +47,13 @@ public class LandingPage extends Commands {
             return month + ":" + day + ":" + year;
         }
 
-        public String localDate() {
-            Date d = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("d"); // dd -> 01,02,22 .... d -> 1,2,22
-            String dateLocal = sdf.format(d);
-            return dateLocal;
-        }
+    public String localDate() {
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM:dd:yyyy");
+        String dateLocal = sdf.format(d);
+        return dateLocal;
+    }
+
 
         // method to check if Time Machine button is displayed
         public boolean isTimeMachineButtonDisplayed() {
