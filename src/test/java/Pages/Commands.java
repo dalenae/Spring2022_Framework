@@ -94,19 +94,10 @@ public class Commands {
     }
 
      //Create custom method to scroll
-    public WebElement scrollToElement(By locator) {
-        WebElement element = null;
-        for (int i=0 ; i <= 15 ; i++) {
-            try {
-                element = findWebElement(locator);
-                break;
-            } catch (ElementClickInterceptedException | NoSuchElementException e) {
-                //scroll by 100
-                JavascriptExecutor js =  (JavascriptExecutor) MyDriver.getDriver();
-                js.executeScript("scrollBy(0,100)");
-            }
-        }
-        return element;
+     public void scrollToElement(By locator) {
+         WebElement element = MyDriver.getDriver().findElement(locator);
+         JavascriptExecutor executor = (JavascriptExecutor) MyDriver.getDriver();
+         executor.executeScript("arguments[0].scrollIntoView();", element);
     }
 
     // custom methods to switch to a window
@@ -133,6 +124,19 @@ public class Commands {
             String currentUrl = MyDriver.getDriver().getCurrentUrl();
             if (!currentUrl.contains(url)) { MyDriver.getDriver().close();
             } } }
+
+    public void switchToSecondBrowserWindow(String parentWindowHandle) {
+        Set<String> allWindowHandles = getAllWindowHandles();
+        for (String id : allWindowHandles) {
+            if (!id.equalsIgnoreCase(parentWindowHandle)) {
+                MyDriver.getDriver().switchTo().window(id);
+            }
+        }
+    }
+
+    public void switchToOriginalWindow(String parentWindowHandle) {
+        MyDriver.getDriver().switchTo().window(parentWindowHandle);
+    }
 
 
 

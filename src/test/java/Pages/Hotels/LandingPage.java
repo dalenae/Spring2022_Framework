@@ -4,6 +4,8 @@ import Pages.Commands;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class LandingPage extends Commands {
@@ -32,10 +34,14 @@ public class LandingPage extends Commands {
     String travelerCountBeforeSearch = "";
     String travelerCountAfterSearch = "";
 
+
     // Calendar related locators
     By currentMonthYear = By.xpath("(//div[@class='uitk-date-picker-month']/h2)[1]"); // <-- change this, not h2, target div
     By nextMonthBtnLocator = By.xpath("(//button[@data-stid='date-picker-paging'])[2]");
     By calendarDoneBtnLocator = By.xpath("//button[@data-stid='apply-date-picker']");
+
+    //Feedback page related locators
+    By submitBtnOnFeedback = By.xpath("//button[text()='Submit']");
 
 
     // Methods
@@ -124,9 +130,9 @@ public class LandingPage extends Commands {
     }
 
     public void selectChildrenAge() {
-        selectInDropdown(firstChildAgeDropdownLocator, "5");
+        selectInDropdown(firstChildAgeDropdownLocator, "4");
         Misc.pause(1);
-        selectInDropdown(secondChildAgeDropdownLocator, "7");
+        selectInDropdown(secondChildAgeDropdownLocator, "Under 1");
         Misc.pause(1);
     }
 
@@ -146,4 +152,7 @@ public class LandingPage extends Commands {
     public boolean isTravelersCountSameBeforeAndAfter() {
         return travelerCountBeforeSearch == travelerCountAfterSearch;
     }
+
+
+
 }
