@@ -25,8 +25,8 @@ public class LandingPage extends Commands {
 
 
     //        // method to scroll to Time Machine button
-        public WebElement scrollToTimeMachineButton() {
-            return scrollToElement(timeMachineLocator);
+      public void scrollToTimeMachineButton() {
+           //  scrollToElement(timeMachineLocator);
         }
 
         // second method to click
@@ -36,9 +36,9 @@ public class LandingPage extends Commands {
         }
 
         // method to check if Time Machine button is enabled
-        public boolean isTimeMachineButtonEnabled() {
-            return scrollToTimeMachineButton().isEnabled();
-        }
+      //  public boolean isTimeMachineButtonEnabled() {
+         //   return scrollToTimeMachineButton().isEnabled();
+     //   }
 
         public String timeMachineDate() {
             String day = getTextOfWebElement(daySelectedLocator);
@@ -56,9 +56,9 @@ public class LandingPage extends Commands {
 
 
         // method to check if Time Machine button is displayed
-        public boolean isTimeMachineButtonDisplayed() {
-            return scrollToTimeMachineButton().isDisplayed();
-        }
+        //public boolean isTimeMachineButtonDisplayed() {
+          //  return scrollToTimeMachineButton().isDisplayed();
+       // }
     public void clickToday() {
         scrollAndClickElement2(todayLocator);
     }
