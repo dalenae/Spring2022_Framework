@@ -11,6 +11,13 @@ public class LandingPage2 extends Commands {
 
     // Nav link Locators
     By signUpBtnLocator = By.xpath("//div[@class='actions']//a[@data-stid='link-header-account-signup']");
+    By emailSignUpLocator = By.xpath("//*[@id='signupFormEmailInput']");
+    By firstNameSignUpLocator = By.xpath("//*[@id='signupFormFirstNameInput']");
+    By signUpFormEntryErrorLocator = By.xpath("//*[contains(@id,'error')]");
+    By lastNameSignUpLocator = By.xpath("//*[@id='signupFormLastNameInput']");
+    By passwordSignUpLocator = By.xpath("//*[@id='signupFormPasswordInput']");
+    By signUpCheckboxLocator = By.xpath("//*[@id='signUpFormRememberMeCheck']/following-sibling::span");
+    By signUpContinueBtnLocator = By.xpath("//*[@id='signupFormSubmitButton']");
     By fiveBottomLinksInInnerNavMenuLocator = By.xpath("//div[@class='header-guest-heading']/following-sibling::div//a");
     By hotelRewardsLinkLocator = By.xpath("//div[@class='header-guest-heading']/following-sibling::div//a/div[text()='Hotels.com® Rewards']");
 
@@ -59,14 +66,25 @@ public class LandingPage2 extends Commands {
     By pageHeaderPrivacyLocator = By.xpath("//*[text()='Privacy Statement']");
 
     // Feedbackpage
-
     By submitBtnOnFeedback = By.xpath("//button[text()='Submit']");
     By feedbackLinkLocator = By.xpath("(//div[@class='uitk-text uitk-type-300'])[12]");
     By feedbackErrorMessageLocator = By.xpath("//p[text()='Please fill in the required information highlighted below.']");
     By redDottedBoxLocator = By.id("required_box_page_rating");
+    By starsOnFeedbackLocator = By.xpath("//div[@class='radio-group']/div/label");
+    By commentFeedbackLocator = By.xpath("//*[@id='verbatim']");
+    By returnToHotelsQuestionsLocator = By.xpath("//*[@id='will-you-return']");
+    By priorBookingBtnLocator = By.xpath("//label[contains(@for,'booked-here-before')]");
+    By didYouAccomplishBtnLocator = By.xpath("//label[contains(@for,'were-you-successful')]");
+    By thankYouForFeedbackMessageLocator = By.xpath("//*[@id='thank-you']");
 
     // Other
     By rewardNightPromoLocator = By.xpath("//span[contains(text(), 'every 10 nights')]");
+
+    //Deals Page
+    By moreTravelLocator = By.xpath("//nav/div/button");
+    By dealsPageLocator = By.xpath("//nav//div[@class='uitk-list']/a[@href='/hotel-deals/']");
+    By searchBookGoHeadingLocator = By.xpath("//*[contains(text(),'Search, book, and save')]");
+    By freeCancellationLocator = By.xpath("//div[contains(@class,'PageHeading')]//*[contains(text(),'Amazing deals with free cancellation')]");
 
 
     // Sign in/out
@@ -113,6 +131,39 @@ public class LandingPage2 extends Commands {
     public boolean isRedDottedBorderDisplayed() {
         return isElementDisplayed(redDottedBoxLocator); }
 
+    public void clickStarRating(String starValue) {
+        List<WebElement> stars = findWebElements(starsOnFeedbackLocator);
+        for (WebElement value : stars) {
+            if (value.getAttribute("for").contains(starValue)) {
+                value.click();
+                break;}}}
+
+    public void enterTextInComments(String inputText) {
+        type(commentFeedbackLocator, inputText); }
+
+    public void selectReturnQuestion(String dropdownOption) {
+        selectInDropdown(returnToHotelsQuestionsLocator, dropdownOption);}
+
+    public void selectPriorBookingAnswer(String answer) {
+        List<WebElement> buttons = findWebElements(priorBookingBtnLocator);
+        for (WebElement btn : buttons) {
+            if (btn.getAttribute("for").contains(answer.toLowerCase())) {
+                btn.click();
+                break;}}}
+
+    public void didYouAccomplishAnswer(String answer) {
+        List<WebElement> buttons = findWebElements(didYouAccomplishBtnLocator);
+        for (WebElement btn : buttons) {
+            if (btn.getAttribute("for").contains(answer.toLowerCase())) {
+                btn.click();
+                break;}}}
+
+    public boolean isThankYouMessageDisplayed() {
+        // I need help with removing wait from here
+        Misc.pause(2);
+        return isElementDisplayed(thankYouForFeedbackMessageLocator);
+    }
+
     // Check in/out  methods
     public void clickCheckInBtn() {
         clickIt(checkInBoxLocator);
@@ -128,10 +179,7 @@ public class LandingPage2 extends Commands {
         List<WebElement> daysToSelect = findWebElements(checkOutDaysLocator);
         for (WebElement value : daysToSelect) {
             if (value.getAttribute("data-day").equals(day)) {
-                value.click();
-            }
-        }
-    }
+                value.click();}}}
 
 
 
@@ -243,6 +291,64 @@ public class LandingPage2 extends Commands {
 
     public String getPageHeadingForPrivacy() {
         return getTextOfWebElement(pageHeaderPrivacyLocator); }
+
+    public void enterEmail(String email) {
+        type(emailSignUpLocator, email);
+    }
+    public void enterFirstName(String firstName) {
+        type(firstNameSignUpLocator, firstName);}
+
+    public boolean signUpErrors(String errorDescription) {
+        List<WebElement> errorMessages = findWebElements(signUpFormEntryErrorLocator);
+        boolean isErrorDisplayed = false;
+        for (WebElement message : errorMessages) {
+            if(message.getText().contains(errorDescription)) {
+                isErrorDisplayed = true;
+                break;
+            }
+        }
+        return isErrorDisplayed;
+    }
+
+    public void enterLastName(String lastName) {
+        type(lastNameSignUpLocator, lastName);
+    }
+
+    public void enterPassword(String password) {
+        type(passwordSignUpLocator, password); }
+
+    public boolean isSignUpCheckboxEnabled() {
+        return isElementEnabled(signUpCheckboxLocator);
+    }
+    public boolean isSignUpCheckboxDisplayed() {
+        return isElementDisplayed(signUpCheckboxLocator);}
+
+    public boolean isContinueBtnEnabled() {
+        return isElementEnabled(signUpContinueBtnLocator);}
+
+    public boolean isContinueBtnDisplayed() {
+        return isElementDisplayed(signUpContinueBtnLocator);}
+
+    //Deals Page
+    public void clickMoreTravel() {
+        clickIt(moreTravelLocator);}
+
+    public void clickDealsPage () {
+        findWebElementWithWait(dealsPageLocator).click();}
+
+    public boolean isSearchBookHeadingDisplayed() {
+        return isElementDisplayed(searchBookGoHeadingLocator);}
+
+    public boolean isCancellationDisplayed() {
+        return isElementDisplayed(freeCancellationLocator);}
+
+    public void clickFreeCancellationHeader() {
+        clickIt(freeCancellationLocator); }
+
+
+
+
+
 
 
 
